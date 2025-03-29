@@ -1,0 +1,34 @@
+trigger:
+- main # Triggers pipeline on changes to the 'main' branch
+
+pool:
+  vmImage: 'ubuntu-latest' # Specifies the agent environment
+
+steps:
+# Install Node.js
+- task: UseNode@2
+  inputs:
+    version: '16.x'
+  displayName: 'Install Node.js'
+
+# Install dependencies
+- script: |
+    npm install
+  displayName: 'Install dependencies'
+
+# Run tests
+- script: |
+    npm test
+  displayName: 'Run tests'
+
+# Build the application
+- script: |
+    npm run build
+  displayName: 'Build the application'
+
+# Publish build artifacts
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+  displayName: 'Publish build artifacts'
