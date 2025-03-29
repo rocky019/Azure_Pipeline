@@ -6,10 +6,10 @@ pool:
 
 steps:
 # Install Node.js version
-- task: UseNode@2
+- task: NodeTaskRunnerInstaller@0
   inputs:
-    version: '16'
-  displayName: 'Install Node.js'
+    nodeVersion: '16'
+
 
 # Install dependencies
 - script: |
